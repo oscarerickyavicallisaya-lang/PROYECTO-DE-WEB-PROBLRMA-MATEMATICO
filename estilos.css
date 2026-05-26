@@ -118,7 +118,7 @@ h1 {
   gap: 0 16px;
 }
 
-.highlight  { color:  #00e5a0}
+.highlight  { color: var(--fib); }
 .highlight2 { color: var(--prime); }
 .amp        { color: var(--muted); }
 

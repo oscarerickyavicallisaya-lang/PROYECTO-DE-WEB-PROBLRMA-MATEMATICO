@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fibonacci y Numeros Primos | Desafio Web</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/estilos.css" />
+  <style>
+:root{--bg:#0d0f14;--bg2:#131720;--surface:#1a1f2e;--border:#2a3040;--text:#e8ecf4;--muted:#7a85a0;--fib:#00e5a0;--prime:#ff6b35;--accent:#5b8af0;--fib-dim:rgba(0,229,160,.12);--prime-dim:rgba(255,107,53,.12);--radius:12px;--radius-lg:20px;--mono:"Space Mono",monospace;--display:"Syne",sans-serif;--transition:0.25s ease}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--display);font-size:16px;line-height:1.7;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+code{font-family:var(--mono);font-size:.85em;color:var(--fib);background:var(--fib-dim);padding:2px 6px;border-radius:4px}
+.container{max-width:1100px;margin:0 auto;padding:0 24px}
+#portada{position:relative;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;overflow:hidden;padding:60px 24px}
+.header-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 40%,rgba(0,229,160,.08) 0%,transparent 70%),radial-gradient(ellipse 50% 40% at 80% 80%,rgba(91,138,240,.07) 0%,transparent 60%)}
+.grid-overlay{position:absolute;inset:0;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:48px 48px;opacity:.35}
+.header-content{position:relative;z-index:1}
+.badge{display:inline-block;font-family:var(--mono);font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);border:1px solid var(--border);border-radius:999px;padding:6px 16px;margin-bottom:32px}
+h1{font-family:var(--display);font-size:clamp(3rem,10vw,7.5rem);font-weight:800;line-height:1;letter-spacing:-.03em;margin-bottom:20px;display:flex;flex-wrap:wrap;justify-content:center;gap:0 16px}
+.highlight{color:var(--fib)}.highlight2{color:var(--prime)}.amp{color:var(--muted)}
+.subtitle{font-size:clamp(1rem,2.5vw,1.25rem);color:var(--muted);max-width:520px;margin:0 auto 32px}
+.meta-info{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.chip{font-family:var(--mono);font-size:.72rem;padding:5px 12px;border-radius:999px;background:var(--surface);border:1px solid var(--border);color:var(--muted)}
+.scroll-hint{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);color:var(--muted);font-size:1.2rem;animation:bob 2s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}
+.section{padding:96px 0}.section-dark{background:var(--bg2)}
+.section-label{font-family:var(--mono);font-size:.72rem;letter-spacing:.15em;text-transform:uppercase;color:var(--fib);margin-bottom:12px}
+h2{font-family:var(--display);font-size:clamp(1.8rem,5vw,3rem);font-weight:800;letter-spacing:-.02em;margin-bottom:48px;line-height:1.1}
+.context-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px}
+.context-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:32px;transition:transform var(--transition)}
+.context-card:hover{transform:translateY(-4px)}
+.card-fib{border-top:3px solid var(--fib)}.card-prime{border-top:3px solid var(--prime)}.card-combo{border-top:3px solid var(--accent)}
+.card-icon{font-size:2rem;margin-bottom:16px}
+.context-card h3{font-size:1.1rem;font-weight:600;margin-bottom:12px}
+.context-card p{font-size:.93rem;color:var(--muted);line-height:1.7}
+.context-card strong{color:var(--text)}
+.algo-layout{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+@media(max-width:768px){.algo-layout{grid-template-columns:1fr}}
+.algo-steps{display:flex;flex-direction:column;gap:24px}
+.step{display:flex;gap:20px;align-items:flex-start}
+.step-num{flex-shrink:0;width:40px;height:40px;border-radius:50%;background:var(--fib-dim);border:1px solid var(--fib);color:var(--fib);font-family:var(--mono);font-size:.85rem;font-weight:700;display:flex;align-items:center;justify-content:center}
+.step-body h4{font-size:1rem;font-weight:600;margin-bottom:6px}.step-body p{font-size:.9rem;color:var(--muted)}
+.algo-code{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden}
+.code-label{padding:10px 20px;font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);background:var(--surface);border-bottom:1px solid var(--border)}
+.algo-code pre{padding:24px;overflow-x:auto;font-family:var(--mono);font-size:.82rem;line-height:1.8}
+.c-keyword{color:var(--accent)}.c-num{color:var(--prime)}.c-comment{color:var(--muted);font-style:italic}
+.calc-wrapper{display:grid;grid-template-columns:360px 1fr;gap:32px;align-items:start}
+@media(max-width:900px){.calc-wrapper{grid-template-columns:1fr}}
+.calc-form-panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:32px}
+.form-description{font-size:.9rem;color:var(--muted);margin-bottom:28px;padding-bottom:20px;border-bottom:1px solid var(--border)}
+.form-group{display:flex;flex-direction:column;gap:6px;margin-bottom:20px}
+.form-group label{font-size:.85rem;font-weight:600;color:var(--text)}
+.optional{color:var(--muted);font-weight:400;font-size:.8rem}
+.form-group input{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);font-family:var(--mono);font-size:1rem;padding:12px 16px;outline:none;transition:border-color var(--transition);width:100%}
+.form-group input:focus{border-color:var(--fib);box-shadow:0 0 0 3px var(--fib-dim)}
+.form-hint{font-size:.75rem;color:var(--muted);font-family:var(--mono)}
+#btn-calcular{width:100%;background:var(--fib);color:#000;border:none;border-radius:var(--radius);font-family:var(--display);font-size:1rem;font-weight:700;padding:14px 24px;cursor:pointer;transition:transform var(--transition),box-shadow var(--transition);display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:10px}
+#btn-calcular:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,229,160,.3)}
+.btn-icon{font-size:1.1rem}
+#btn-limpiar{width:100%;background:transparent;color:var(--muted);border:1px solid var(--border);border-radius:var(--radius);font-family:var(--display);font-size:.9rem;padding:10px 24px;cursor:pointer;transition:color var(--transition),border-color var(--transition)}
+#btn-limpiar:hover{color:var(--text);border-color:var(--text)}
+.calc-result-panel{min-height:320px}
+.resultado-vacio{background:var(--surface);border:1px dashed var(--border);border-radius:var(--radius-lg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:64px 32px;text-align:center;color:var(--muted)}
+.vacio-icon{font-size:3rem;opacity:.3;font-family:var(--mono)}
+.resultado-wrapper{display:flex;flex-direction:column;gap:20px;animation:fadeIn .4s ease}
+.oculto{display:none!important}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.resultado-stats{display:flex;flex-wrap:wrap;gap:12px}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 24px;flex:1;min-width:120px;text-align:center}
+.stat-num{font-family:var(--mono);font-size:1.6rem;font-weight:700;margin-bottom:4px}
+.stat-label{font-size:.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.stat-fib .stat-num{color:var(--fib)}.stat-prime .stat-num{color:var(--prime)}.stat-total .stat-num{color:var(--accent)}
+.resultado-titulo{font-family:var(--mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);padding-bottom:8px}
+.mt{margin-top:8px}
+.resultado-secuencia{display:flex;flex-wrap:wrap;gap:8px}
+.num-chip{font-family:var(--mono);font-size:.82rem;padding:6px 12px;border-radius:8px;background:var(--surface);border:1px solid var(--border);color:var(--muted)}
+.num-chip.es-primo{background:var(--prime-dim);border-color:var(--prime);color:var(--prime);font-weight:700}
+.resultado-tabla{overflow-x:auto;border-radius:var(--radius);border:1px solid var(--border)}
+.resultado-tabla table{width:100%;border-collapse:collapse;font-size:.85rem;font-family:var(--mono)}
+.resultado-tabla th{background:var(--surface);color:var(--muted);text-transform:uppercase;font-size:.7rem;letter-spacing:.1em;padding:10px 16px;text-align:left;border-bottom:1px solid var(--border)}
+.resultado-tabla td{padding:8px 16px;border-bottom:1px solid var(--border)}
+.resultado-tabla tr:last-child td{border-bottom:none}
+.resultado-tabla tr.fila-primo{background:var(--prime-dim);color:var(--prime)}
+.tag-primo{font-size:.65rem;background:var(--prime);color:#000;padding:2px 6px;border-radius:4px;font-weight:700}
+.resultado-primos{display:flex;flex-wrap:wrap;gap:10px}
+.primo-badge{display:flex;align-items:center;gap:8px;background:var(--prime-dim);border:1px solid var(--prime);border-radius:var(--radius);padding:8px 16px;font-family:var(--mono);font-size:.85rem;color:var(--prime)}
+.primo-badge .pos{opacity:.5;font-size:.72rem}
+.conclusion-grid{display:grid;grid-template-columns:1fr 380px;gap:48px;align-items:start}
+@media(max-width:900px){.conclusion-grid{grid-template-columns:1fr}}
+.conclusion-text p{color:var(--muted);margin-bottom:16px;font-size:.98rem}
+.conclusion-text strong{color:var(--text)}
+.conclusion-facts{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.fact{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;text-align:center}
+.fact-num{font-family:var(--mono);font-size:1.1rem;font-weight:700;color:var(--fib);margin-bottom:6px}
+.fact-label{font-size:.75rem;color:var(--muted)}
+.links-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px}
+.link-card{display:flex;align-items:center;gap:20px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:24px;transition:border-color var(--transition),transform var(--transition)}
+.link-card:hover{border-color:var(--accent);transform:translateY(-3px)}
+.link-icon{font-size:1.5rem;opacity:.6;flex-shrink:0}
+.link-type{font-size:.78rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px}
+.link-url{font-family:var(--mono);font-size:.82rem;color:var(--accent)}
+.link-arrow{margin-left:auto;color:var(--muted);font-size:1.2rem}
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:32px 0;text-align:center;color:var(--muted);font-size:.82rem;font-family:var(--mono)}
+@media(max-width:600px){.section{padding:64px 0}h2{margin-bottom:32px}.calc-form-panel{padding:24px}}
+  </style>
+</head>
+<body>
+
+  <!-- PORTADA / ENCABEZADO -->
+  <header id="portada">
+    <div class="header-bg"><div class="grid-overlay"></div></div>
+    <div class="header-content">
+      <div class="badge">Desafio Web 2025</div>
+      <h1>
+        <span class="highlight">Fibonacci</span>
+        <span class="amp">&amp;</span>
+        <span class="highlight2">Primos</span>
+      </h1>
+      <p class="subtitle">Matematicas que resuelven problemas del mundo real</p>
+      <div class="meta-info">
+        <span class="chip">HTML &#183; CSS &#183; JavaScript</span>
+        <span class="chip">Diseno Responsivo</span>
+        <span class="chip">Fibonacci + Primos</span>
+      </div>
+    </div>
+    <div class="scroll-hint">&#8595;</div>
+  </header>
+
+  <main>
+
+    <!-- CONTEXTO DEL PROBLEMA -->
+    <section id="contexto" class="section">
+      <div class="container">
+        <div class="section-label">01 &#8212; Contexto</div>
+        <h2>El problema que resolvemos</h2>
+        <div class="context-grid">
+          <div class="context-card card-fib">
+            <div class="card-icon">&#127807;</div>
+            <h3>Fibonacci en la naturaleza y las finanzas</h3>
+            <p>La serie de Fibonacci aparece en el crecimiento de poblaciones, la reproduccion de especies y en estrategias de ahorro progresivo. Cada numero es la suma de los dos anteriores: <strong>0, 1, 1, 2, 3, 5, 8, 13...</strong></p>
+          </div>
+          <div class="context-card card-prime">
+            <div class="card-icon">&#128272;</div>
+            <h3>Primos en la seguridad informatica</h3>
+            <p>Los numeros primos son la base de la criptografia moderna. Un numero primo solo es divisible entre <strong>1 y si mismo</strong>. Son ideales para generar claves seguras y validar codigos de acceso.</p>
+          </div>
+          <div class="context-card card-combo">
+            <div class="card-icon">&#9889;</div>
+            <h3>Que hacemos aqui?</h3>
+            <p>Generamos la secuencia de Fibonacci y detectamos cuales de esos valores tambien son numeros primos. Combinamos ambos conceptos para revelar los <strong>"Numeros de Fibonacci Primos"</strong>.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EXPLICACION DEL ALGORITMO -->
+    <section id="algoritmo" class="section section-dark">
+      <div class="container">
+        <div class="section-label">02 &#8212; Algoritmo</div>
+        <h2>Como funciona?</h2>
+        <div class="algo-layout">
+          <div class="algo-steps">
+            <div class="step">
+              <div class="step-num">1</div>
+              <div class="step-body">
+                <h4>Generar Fibonacci</h4>
+                <p>Iniciamos con <code>a = 0</code> y <code>b = 1</code>. En cada iteracion calculamos <code>c = a + b</code>, luego avanzamos: <code>a = b</code>, <code>b = c</code>. Sin arrays.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">2</div>
+              <div class="step-body">
+                <h4>Verificar si es primo</h4>
+                <p>Contamos cuantos divisores tiene el numero. Si el contador es exactamente <strong>2</strong> (solo 1 y el mismo), es primo.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">3</div>
+              <div class="step-body">
+                <h4>Mostrar resultados</h4>
+                <p>Mostramos la secuencia completa y resaltamos en naranja los terminos que tambien son numeros primos.</p>
+              </div>
+            </div>
+          </div>
+          <div class="algo-code">
+            <div class="code-label">JavaScript &#8212; algoritmo base</div>
+            <pre><code><span class="c-keyword">let</span> a = <span class="c-num">0</span>, b = <span class="c-num">1</span>, c;
+
+<span class="c-keyword">for</span> (<span class="c-keyword">let</span> i = <span class="c-num">0</span>; i &lt; n; i++) {
+  <span class="c-comment">// Contar divisores</span>
+  <span class="c-keyword">let</span> contador = <span class="c-num">0</span>;
+  <span class="c-keyword">for</span> (<span class="c-keyword">let</span> j = <span class="c-num">1</span>; j &lt;= a; j++) {
+    <span class="c-keyword">if</span> (a % j == <span class="c-num">0</span>) contador++;
+  }
+  <span class="c-keyword">let</span> primo = (contador == <span class="c-num">2</span>);
+
+  <span class="c-comment">// Avanzar sin arrays</span>
+  c = a + b; a = b; b = c;
+}</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CALCULADORA -->
+    <section id="calculadora" class="section">
+      <div class="container">
+        <div class="section-label">03 &#8212; Calculadora</div>
+        <h2>Pruebalo tu mismo</h2>
+        <div class="calc-wrapper">
+          <!-- Formulario de entrada -->
+          <div class="calc-form-panel">
+            <div class="form-description">
+              <p>Ingresa cuantos terminos de Fibonacci deseas generar. El sistema calculara cuales de ellos tambien son numeros primos y mostrara el plan de ahorro.</p>
+            </div>
+            <div class="form-group">
+              <label for="terminos">Numero de terminos</label>
+              <input type="number" id="terminos" min="1" max="50" placeholder="Ej: 15" />
+              <span class="form-hint">Entre 1 y 50 terminos</span>
+            </div>
+            <div class="form-group">
+              <label for="ahorro-base">Ahorro base (Bs.) <span class="optional">&#8212; opcional</span></label>
+              <input type="number" id="ahorro-base" min="1" placeholder="Ej: 10" />
+              <span class="form-hint">Multiplica la secuencia por este valor</span>
+            </div>
+            <!-- Boton de ejecucion -->
+            <button id="btn-calcular">
+              <span class="btn-text">Calcular</span>
+              <span class="btn-icon">&#8594;</span>
+            </button>
+            <button id="btn-limpiar">Limpiar</button>
+          </div>
+          <!-- Area de resultado -->
+          <div class="calc-result-panel">
+            <div id="resultado-wrapper" class="resultado-wrapper oculto">
+              <div class="resultado-stats" id="resultado-stats"></div>
+              <div class="resultado-titulo">Secuencia generada</div>
+              <div id="resultado" class="resultado-secuencia"></div>
+              <div class="resultado-titulo mt">Desglose de ahorro</div>
+              <div id="resultado-tabla" class="resultado-tabla"></div>
+              <div class="resultado-titulo mt">Primos encontrados</div>
+              <div id="resultado-primos" class="resultado-primos"></div>
+            </div>
+            <div id="resultado-vacio" class="resultado-vacio">
+              <div class="vacio-icon">&#8721;</div>
+              <p>Ingresa los datos y presiona <strong>Calcular</strong></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONCLUSION -->
+    <section id="conclusion" class="section section-dark">
+      <div class="container">
+        <div class="section-label">04 &#8212; Conclusion</div>
+        <h2>Por que importa esto?</h2>
+        <div class="conclusion-grid">
+          <div class="conclusion-text">
+            <p>La serie de Fibonacci y los numeros primos no son simples curiosidades matematicas: son herramientas que la naturaleza y la tecnologia han adoptado por razones muy concretas.</p>
+            <p>Un plan de ahorro basado en Fibonacci es psicologicamente sostenible porque los incrementos son graduales y siguen un patron natural. Al mismo tiempo, identificar cuales de esos montos son primos nos da valores con propiedades criptograficas utiles.</p>
+            <p><strong>Las matematicas estan en nuestros ahorros, en la seguridad de nuestras contrasenas y en los patrones que vemos en la naturaleza.</strong></p>
+          </div>
+          <div class="conclusion-facts">
+            <div class="fact"><div class="fact-num">F(3)=2</div><div class="fact-label">Primer primo en Fibonacci</div></div>
+            <div class="fact"><div class="fact-num">F(4)=3</div><div class="fact-label">Segundo primo en Fibonacci</div></div>
+            <div class="fact"><div class="fact-num">RSA</div><div class="fact-label">Cifrado basado en primos</div></div>
+            <div class="fact"><div class="fact-num">1.618</div><div class="fact-label">Proporcion aurea</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ENLACES -->
+    <section id="enlaces" class="section">
+      <div class="container">
+        <div class="section-label">05 &#8212; Entrega</div>
+        <h2>Links del proyecto</h2>
+        <div class="links-grid">
+          <a href="https://github.com/tu-usuario/desafio-fibonacci-primos" target="_blank" class="link-card">
+            <div class="link-icon">&#9997;</div>
+            <div class="link-info">
+              <div class="link-type">Repositorio Git</div>
+              <div class="link-url">github.com/tu-usuario/desafio-fibonacci-primos</div>
+            </div>
+            <div class="link-arrow">&#8599;</div>
+          </a>
+          <a href="https://tu-usuario.github.io/desafio-fibonacci-primos" target="_blank" class="link-card">
+            <div class="link-icon">&#9672;</div>
+            <div class="link-info">
+              <div class="link-type">Pagina publicada</div>
+              <div class="link-url">tu-usuario.github.io/desafio-fibonacci-primos</div>
+            </div>
+            <div class="link-arrow">&#8599;</div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>Desafio Web 2025 &#183; Matematicas que resuelven problemas &#183; HTML + CSS + JavaScript</p>
+    </div>
+  </footer>
+
+  <!-- JAVASCRIPT INLINE — garantiza funcionamiento en GitHub Pages -->
+  <script>
+
+    // esPrimo: cuenta divisores. Si son exactamente 2, es primo.
+    // (Algoritmo del documento del desafio: usar getElementById)
+    function esPrimo(numero) {
+      if (numero < 2) return false;
+      var contador = 0;
+      for (var i = 1; i <= numero; i++) {
+        if (numero % i == 0) {
+          contador++;
+        }
+      }
+      return (contador == 2);
+    }
+
+    // calcular: lee inputs, genera Fibonacci sin arrays, verifica primos,
+    // y muestra resultados en la pagina usando getElementById()
+    function calcular() {
+
+      // 1. Leer datos con getElementById()
+      var n          = parseInt(document.getElementById("terminos").value);
+      var ahorroBase = parseInt(document.getElementById("ahorro-base").value) || 1;
+
+      // 2. Validar
+      if (isNaN(n) || n < 1 || n > 50) {
+        document.getElementById("terminos").style.borderColor = "#ff6b35";
+        document.getElementById("terminos").focus();
+        setTimeout(function() {
+          document.getElementById("terminos").style.borderColor = "";
+        }, 1500);
+        return;
+      }
+
+      // 3. Fibonacci sin arrays (variables simples: a, b, c)
+      var a = 0;
+      var b = 1;
+      var c;
+
+      var htmlChips      = "";
+      var htmlFilas      = "";
+      var htmlPrimos     = "";
+      var totalAhorro    = 0;
+      var cantidadPrimos = 0;
+      var posicion       = 1;
+
+      for (var i = 0; i < n; i++) {
+
+        var valorFib = a;
+        var ahorro   = valorFib * ahorroBase;
+        totalAhorro  = totalAhorro + ahorro;
+        var primo    = esPrimo(valorFib);
+
+        if (primo) {
+          htmlChips += "<span class=\"num-chip es-primo\" title=\"Es primo\">" + valorFib + "</span>";
+        } else {
+          htmlChips += "<span class=\"num-chip\">" + valorFib + "</span>";
+        }
+
+        var tagPrimo = primo ? "<span class=\"tag-primo\">PRIMO</span>" : "";
+        var claseF   = primo ? " class=\"fila-primo\"" : "";
+        htmlFilas +=
+          "<tr" + claseF + ">" +
+            "<td>" + posicion + "</td>" +
+            "<td>" + valorFib + "</td>" +
+            "<td>Bs. " + ahorro + "</td>" +
+            "<td>Bs. " + totalAhorro + "</td>" +
+            "<td>" + tagPrimo + "</td>" +
+          "</tr>";
+
+        if (primo) {
+          htmlPrimos +=
+            "<div class=\"primo-badge\">" +
+              "<span class=\"pos\">F(" + posicion + ")</span>" +
+              "<strong>" + valorFib + "</strong>" +
+            "</div>";
+          cantidadPrimos++;
+        }
+
+        c = a + b;
+        a = b;
+        b = c;
+        posicion++;
+      }
+
+      if (htmlPrimos === "") {
+        htmlPrimos = "<p style=\"color:var(--muted);font-size:.9rem;\">Ninguno de los " + n + " terminos generados es primo.</p>";
+      }
+
+      var htmlTabla =
+        "<table>" +
+          "<thead><tr><th>Mes</th><th>Fibonacci</th><th>Ahorro</th><th>Acumulado</th><th>Tipo</th></tr></thead>" +
+          "<tbody>" + htmlFilas + "</tbody>" +
+        "</table>";
+
+      var htmlStats =
+        "<div class=\"stat-card stat-total\"><div class=\"stat-num\">" + n + "</div><div class=\"stat-label\">Terminos</div></div>" +
+        "<div class=\"stat-card stat-fib\"><div class=\"stat-num\">Bs. " + totalAhorro + "</div><div class=\"stat-label\">Ahorro total</div></div>" +
+        "<div class=\"stat-card stat-prime\"><div class=\"stat-num\">" + cantidadPrimos + "</div><div class=\"stat-label\">Primos hallados</div></div>";
+
+      // 4. Mostrar resultados con getElementById()
+      document.getElementById("resultado-stats").innerHTML  = htmlStats;
+      document.getElementById("resultado").innerHTML        = htmlChips;
+      document.getElementById("resultado-tabla").innerHTML  = htmlTabla;
+      document.getElementById("resultado-primos").innerHTML = htmlPrimos;
+
+      document.getElementById("resultado-wrapper").classList.remove("oculto");
+      document.getElementById("resultado-vacio").classList.add("oculto");
+    }
+
+    // limpiar: borra campos y resultados con getElementById()
+    function limpiar() {
+      document.getElementById("terminos").value    = "";
+      document.getElementById("ahorro-base").value = "";
+      document.getElementById("resultado-stats").innerHTML  = "";
+      document.getElementById("resultado").innerHTML        = "";
+      document.getElementById("resultado-tabla").innerHTML  = "";
+      document.getElementById("resultado-primos").innerHTML = "";
+      document.getElementById("resultado-wrapper").classList.add("oculto");
+      document.getElementById("resultado-vacio").classList.remove("oculto");
+      document.getElementById("terminos").focus();
+    }
+
+    // Asignar eventos con getElementById() cuando carga la pagina
+    document.addEventListener("DOMContentLoaded", function() {
+      document.getElementById("btn-calcular").addEventListener("click", calcular);
+      document.getElementById("btn-limpiar").addEventListener("click",  limpiar);
+      document.getElementById("terminos").addEventListener("keydown", function(e) {
+        if (e.key === "Enter") calcular();
+      });
+      document.getElementById("ahorro-base").addEventListener("keydown", function(e) {
+        if (e.key === "Enter") calcular();
+      });
+    });
+
+  </script>
+
+</body>
+</html>

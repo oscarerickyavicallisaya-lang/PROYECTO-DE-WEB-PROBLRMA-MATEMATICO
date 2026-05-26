@@ -4,15 +4,25 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Fibonacci y Numeros Primos | Desafio Web</title>
+  <!-- FONTS: siempre primero, antes de cualquier CSS -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="estilos.css" />
+  <link rel="stylesheet" href="css/estilos.css" />
   <style>
-:root{--bg:#0d0f14;--bg2:#131720;--surface:#1a1f2e;--border:#2a3040;--text:#e8ecf4;--muted:#7a85a0;--fib:#00e5a0;--prime:#ff6b35;--accent:#5b8af0;--fib-dim:rgba(0,229,160,.12);--prime-dim:rgba(255,107,53,.12);--radius:12px;--radius-lg:20px;--mono:"Space Mono",monospace;--display:"Syne",sans-serif;--transition:0.25s ease}
+/* Las variables de fuente usan el MISMO nombre exacto que Google Fonts */
+:root{
+  --bg:#0d0f14;--bg2:#131720;--surface:#1a1f2e;--border:#2a3040;
+  --text:#e8ecf4;--muted:#7a85a0;--fib:#00e5a0;--prime:#ff6b35;--accent:#5b8af0;
+  --fib-dim:rgba(0,229,160,.12);--prime-dim:rgba(255,107,53,.12);
+  --radius:12px;--radius-lg:20px;--transition:0.25s ease;
+  /* CRITICO: nombre exacto como aparece en Google Fonts, con comillas simples */
+  --mono: 'Space Mono', monospace;
+  --display: 'Syne', sans-serif;
+}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--text);font-family:var(--display);font-size:16px;line-height:1.7;overflow-x:hidden}
+body{background:var(--bg);color:var(--text);font-family:'Syne',var(--display),sans-serif;font-size:16px;line-height:1.7;overflow-x:hidden}
 a{color:inherit;text-decoration:none}
 code{font-family:var(--mono);font-size:.85em;color:var(--fib);background:var(--fib-dim);padding:2px 6px;border-radius:4px}
 .container{max-width:1100px;margin:0 auto;padding:0 24px}
@@ -21,16 +31,16 @@ code{font-family:var(--mono);font-size:.85em;color:var(--fib);background:var(--f
 .grid-overlay{position:absolute;inset:0;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:48px 48px;opacity:.35}
 .header-content{position:relative;z-index:1}
 .badge{display:inline-block;font-family:var(--mono);font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);border:1px solid var(--border);border-radius:999px;padding:6px 16px;margin-bottom:32px}
-h1{font-family:var(--display);font-size:clamp(3rem,10vw,7.5rem);font-weight:800;line-height:1;letter-spacing:-.03em;margin-bottom:20px;display:flex;flex-wrap:wrap;justify-content:center;gap:0 16px}
-.highlight{color:var(--fib)}.highlight2{color:var(--prime)}.amp{color:var(--muted)}
-.subtitle{font-size:clamp(1rem,2.5vw,1.25rem);color:var(--muted);max-width:520px;margin:0 auto 32px}
+h1{font-family:'Syne',var(--display),sans-serif;font-size:clamp(3rem,10vw,7.5rem);font-weight:800;line-height:1;letter-spacing:-.03em;margin-bottom:20px;display:flex;flex-wrap:wrap;justify-content:center;gap:0 16px}
+.highlight{color:#00e5a0}.highlight2{color:#ff6b35}.amp{color:#7a85a0}
+.subtitle{font-size:clamp(1rem,2.5vw,1.25rem);color:#7a85a0;max-width:520px;margin:0 auto 32px}
 .meta-info{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
 .chip{font-family:var(--mono);font-size:.72rem;padding:5px 12px;border-radius:999px;background:var(--surface);border:1px solid var(--border);color:var(--muted)}
 .scroll-hint{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);color:var(--muted);font-size:1.2rem;animation:bob 2s ease-in-out infinite}
 @keyframes bob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}
 .section{padding:96px 0}.section-dark{background:var(--bg2)}
 .section-label{font-family:var(--mono);font-size:.72rem;letter-spacing:.15em;text-transform:uppercase;color:var(--fib);margin-bottom:12px}
-h2{font-family:var(--display);font-size:clamp(1.8rem,5vw,3rem);font-weight:800;letter-spacing:-.02em;margin-bottom:48px;line-height:1.1}
+h2{font-family:'Syne',var(--display),sans-serif;font-size:clamp(1.8rem,5vw,3rem);font-weight:800;letter-spacing:-.02em;margin-bottom:48px;line-height:1.1}
 .context-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px}
 .context-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:32px;transition:transform var(--transition)}
 .context-card:hover{transform:translateY(-4px)}

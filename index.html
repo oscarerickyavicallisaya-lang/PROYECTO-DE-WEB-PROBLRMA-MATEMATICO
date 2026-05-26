@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fibonacci y Numeros Primos | Desafio Web</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/estilos.css" />
+</head>
+<body>
+
+  <!-- PORTADA / ENCABEZADO -->
+  <header id="portada">
+    <div class="header-bg"><div class="grid-overlay"></div></div>
+    <div class="header-content">
+      <div class="badge">Desafio Web 2025</div>
+      <h1>
+        <span class="highlight">Fibonacci</span>
+        <span class="amp">&amp;</span>
+        <span class="highlight2">Primos</span>
+      </h1>
+      <p class="subtitle">Matematicas que resuelven problemas del mundo real</p>
+      <div class="meta-info">
+        <span class="chip">HTML &#183; CSS &#183; JavaScript</span>
+        <span class="chip">Diseno Responsivo</span>
+        <span class="chip">Fibonacci + Primos</span>
+      </div>
+    </div>
+    <div class="scroll-hint">&#8595;</div>
+  </header>
+
+  <main>
+
+    <!-- CONTEXTO DEL PROBLEMA -->
+    <section id="contexto" class="section">
+      <div class="container">
+        <div class="section-label">01 &#8212; Contexto</div>
+        <h2>El problema que resolvemos</h2>
+        <div class="context-grid">
+          <div class="context-card card-fib">
+            <div class="card-icon">&#127807;</div>
+            <h3>Fibonacci en la naturaleza y las finanzas</h3>
+            <p>La serie de Fibonacci aparece en el crecimiento de poblaciones, la reproduccion de especies y en estrategias de ahorro progresivo. Cada numero es la suma de los dos anteriores: <strong>0, 1, 1, 2, 3, 5, 8, 13...</strong></p>
+          </div>
+          <div class="context-card card-prime">
+            <div class="card-icon">&#128272;</div>
+            <h3>Primos en la seguridad informatica</h3>
+            <p>Los numeros primos son la base de la criptografia moderna. Un numero primo solo es divisible entre <strong>1 y si mismo</strong>. Son ideales para generar claves seguras y validar codigos de acceso.</p>
+          </div>
+          <div class="context-card card-combo">
+            <div class="card-icon">&#9889;</div>
+            <h3>Que hacemos aqui?</h3>
+            <p>Generamos la secuencia de Fibonacci y detectamos cuales de esos valores tambien son numeros primos. Combinamos ambos conceptos para revelar los <strong>"Numeros de Fibonacci Primos"</strong>.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EXPLICACION DEL ALGORITMO -->
+    <section id="algoritmo" class="section section-dark">
+      <div class="container">
+        <div class="section-label">02 &#8212; Algoritmo</div>
+        <h2>Como funciona?</h2>
+        <div class="algo-layout">
+          <div class="algo-steps">
+            <div class="step">
+              <div class="step-num">1</div>
+              <div class="step-body">
+                <h4>Generar Fibonacci</h4>
+                <p>Iniciamos con <code>a = 0</code> y <code>b = 1</code>. En cada iteracion calculamos <code>c = a + b</code>, luego avanzamos: <code>a = b</code>, <code>b = c</code>. Sin arrays.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">2</div>
+              <div class="step-body">
+                <h4>Verificar si es primo</h4>
+                <p>Contamos cuantos divisores tiene el numero. Si el contador es exactamente <strong>2</strong> (solo 1 y el mismo), es primo.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">3</div>
+              <div class="step-body">
+                <h4>Mostrar resultados</h4>
+                <p>Mostramos la secuencia completa y resaltamos en naranja los terminos que tambien son numeros primos.</p>
+              </div>
+            </div>
+          </div>
+          <div class="algo-code">
+            <div class="code-label">JavaScript &#8212; algoritmo base</div>
+            <pre><code><span class="c-keyword">let</span> a = <span class="c-num">0</span>, b = <span class="c-num">1</span>, c;
+
+<span class="c-keyword">for</span> (<span class="c-keyword">let</span> i = <span class="c-num">0</span>; i &lt; n; i++) {
+  <span class="c-comment">// Contar divisores</span>
+  <span class="c-keyword">let</span> contador = <span class="c-num">0</span>;
+  <span class="c-keyword">for</span> (<span class="c-keyword">let</span> j = <span class="c-num">1</span>; j &lt;= a; j++) {
+    <span class="c-keyword">if</span> (a % j == <span class="c-num">0</span>) contador++;
+  }
+  <span class="c-keyword">let</span> primo = (contador == <span class="c-num">2</span>);
+
+  <span class="c-comment">// Avanzar sin arrays</span>
+  c = a + b; a = b; b = c;
+}</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CALCULADORA -->
+    <section id="calculadora" class="section">
+      <div class="container">
+        <div class="section-label">03 &#8212; Calculadora</div>
+        <h2>Pruebalo tu mismo</h2>
+        <div class="calc-wrapper">
+          <!-- Formulario de entrada -->
+          <div class="calc-form-panel">
+            <div class="form-description">
+              <p>Ingresa cuantos terminos de Fibonacci deseas generar. El sistema calculara cuales de ellos tambien son numeros primos y mostrara el plan de ahorro.</p>
+            </div>
+            <div class="form-group">
+              <label for="terminos">Numero de terminos</label>
+              <input type="number" id="terminos" min="1" max="50" placeholder="Ej: 15" />
+              <span class="form-hint">Entre 1 y 50 terminos</span>
+            </div>
+            <div class="form-group">
+              <label for="ahorro-base">Ahorro base (Bs.) <span class="optional">&#8212; opcional</span></label>
+              <input type="number" id="ahorro-base" min="1" placeholder="Ej: 10" />
+              <span class="form-hint">Multiplica la secuencia por este valor</span>
+            </div>
+            <!-- Boton de ejecucion -->
+            <button id="btn-calcular">
+              <span class="btn-text">Calcular</span>
+              <span class="btn-icon">&#8594;</span>
+            </button>
+            <button id="btn-limpiar">Limpiar</button>
+          </div>
+          <!-- Area de resultado -->
+          <div class="calc-result-panel">
+            <div id="resultado-wrapper" class="resultado-wrapper oculto">
+              <div class="resultado-stats" id="resultado-stats"></div>
+              <div class="resultado-titulo">Secuencia generada</div>
+              <div id="resultado" class="resultado-secuencia"></div>
+              <div class="resultado-titulo mt">Desglose de ahorro</div>
+              <div id="resultado-tabla" class="resultado-tabla"></div>
+              <div class="resultado-titulo mt">Primos encontrados</div>
+              <div id="resultado-primos" class="resultado-primos"></div>
+            </div>
+            <div id="resultado-vacio" class="resultado-vacio">
+              <div class="vacio-icon">&#8721;</div>
+              <p>Ingresa los datos y presiona <strong>Calcular</strong></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONCLUSION -->
+    <section id="conclusion" class="section section-dark">
+      <div class="container">
+        <div class="section-label">04 &#8212; Conclusion</div>
+        <h2>Por que importa esto?</h2>
+        <div class="conclusion-grid">
+          <div class="conclusion-text">
+            <p>La serie de Fibonacci y los numeros primos no son simples curiosidades matematicas: son herramientas que la naturaleza y la tecnologia han adoptado por razones muy concretas.</p>
+            <p>Un plan de ahorro basado en Fibonacci es psicologicamente sostenible porque los incrementos son graduales y siguen un patron natural. Al mismo tiempo, identificar cuales de esos montos son primos nos da valores con propiedades criptograficas utiles.</p>
+            <p><strong>Las matematicas estan en nuestros ahorros, en la seguridad de nuestras contrasenas y en los patrones que vemos en la naturaleza.</strong></p>
+          </div>
+          <div class="conclusion-facts">
+            <div class="fact"><div class="fact-num">F(3)=2</div><div class="fact-label">Primer primo en Fibonacci</div></div>
+            <div class="fact"><div class="fact-num">F(4)=3</div><div class="fact-label">Segundo primo en Fibonacci</div></div>
+            <div class="fact"><div class="fact-num">RSA</div><div class="fact-label">Cifrado basado en primos</div></div>
+            <div class="fact"><div class="fact-num">1.618</div><div class="fact-label">Proporcion aurea</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ENLACES -->
+    <section id="enlaces" class="section">
+      <div class="container">
+        <div class="section-label">05 &#8212; Entrega</div>
+        <h2>Links del proyecto</h2>
+        <div class="links-grid">
+          <a href="https://github.com/tu-usuario/desafio-fibonacci-primos" target="_blank" class="link-card">
+            <div class="link-icon">&#9997;</div>
+            <div class="link-info">
+              <div class="link-type">Repositorio Git</div>
+              <div class="link-url">github.com/tu-usuario/desafio-fibonacci-primos</div>
+            </div>
+            <div class="link-arrow">&#8599;</div>
+          </a>
+          <a href="https://tu-usuario.github.io/desafio-fibonacci-primos" target="_blank" class="link-card">
+            <div class="link-icon">&#9672;</div>
+            <div class="link-info">
+              <div class="link-type">Pagina publicada</div>
+              <div class="link-url">tu-usuario.github.io/desafio-fibonacci-primos</div>
+            </div>
+            <div class="link-arrow">&#8599;</div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>Desafio Web 2025 &#183; Matematicas que resuelven problemas &#183; HTML + CSS + JavaScript</p>
+    </div>
+  </footer>
+
+  <!-- JAVASCRIPT INLINE — garantiza funcionamiento en GitHub Pages -->
+  <script>
+
+    // esPrimo: cuenta divisores. Si son exactamente 2, es primo.
+    // (Algoritmo del documento del desafio: usar getElementById)
+    function esPrimo(numero) {
+      if (numero < 2) return false;
+      var contador = 0;
+      for (var i = 1; i <= numero; i++) {
+        if (numero % i == 0) {
+          contador++;
+        }
+      }
+      return (contador == 2);
+    }
+
+    // calcular: lee inputs, genera Fibonacci sin arrays, verifica primos,
+    // y muestra resultados en la pagina usando getElementById()
+    function calcular() {
+
+      // 1. Leer datos con getElementById()
+      var n          = parseInt(document.getElementById("terminos").value);
+      var ahorroBase = parseInt(document.getElementById("ahorro-base").value) || 1;
+
+      // 2. Validar
+      if (isNaN(n) || n < 1 || n > 50) {
+        document.getElementById("terminos").style.borderColor = "#ff6b35";
+        document.getElementById("terminos").focus();
+        setTimeout(function() {
+          document.getElementById("terminos").style.borderColor = "";
+        }, 1500);
+        return;
+      }
+
+      // 3. Fibonacci sin arrays (variables simples: a, b, c)
+      var a = 0;
+      var b = 1;
+      var c;
+
+      var htmlChips      = "";
+      var htmlFilas      = "";
+      var htmlPrimos     = "";
+      var totalAhorro    = 0;
+      var cantidadPrimos = 0;
+      var posicion       = 1;
+
+      for (var i = 0; i < n; i++) {
+
+        var valorFib = a;
+        var ahorro   = valorFib * ahorroBase;
+        totalAhorro  = totalAhorro + ahorro;
+        var primo    = esPrimo(valorFib);
+
+        if (primo) {
+          htmlChips += "<span class=\"num-chip es-primo\" title=\"Es primo\">" + valorFib + "</span>";
+        } else {
+          htmlChips += "<span class=\"num-chip\">" + valorFib + "</span>";
+        }
+
+        var tagPrimo = primo ? "<span class=\"tag-primo\">PRIMO</span>" : "";
+        var claseF   = primo ? " class=\"fila-primo\"" : "";
+        htmlFilas +=
+          "<tr" + claseF + ">" +
+            "<td>" + posicion + "</td>" +
+            "<td>" + valorFib + "</td>" +
+            "<td>Bs. " + ahorro + "</td>" +
+            "<td>Bs. " + totalAhorro + "</td>" +
+            "<td>" + tagPrimo + "</td>" +
+          "</tr>";
+
+        if (primo) {
+          htmlPrimos +=
+            "<div class=\"primo-badge\">" +
+              "<span class=\"pos\">F(" + posicion + ")</span>" +
+              "<strong>" + valorFib + "</strong>" +
+            "</div>";
+          cantidadPrimos++;
+        }
+
+        c = a + b;
+        a = b;
+        b = c;
+        posicion++;
+      }
+
+      if (htmlPrimos === "") {
+        htmlPrimos = "<p style=\"color:var(--muted);font-size:.9rem;\">Ninguno de los " + n + " terminos generados es primo.</p>";
+      }
+
+      var htmlTabla =
+        "<table>" +
+          "<thead><tr><th>Mes</th><th>Fibonacci</th><th>Ahorro</th><th>Acumulado</th><th>Tipo</th></tr></thead>" +
+          "<tbody>" + htmlFilas + "</tbody>" +
+        "</table>";
+
+      var htmlStats =
+        "<div class=\"stat-card stat-total\"><div class=\"stat-num\">" + n + "</div><div class=\"stat-label\">Terminos</div></div>" +
+        "<div class=\"stat-card stat-fib\"><div class=\"stat-num\">Bs. " + totalAhorro + "</div><div class=\"stat-label\">Ahorro total</div></div>" +
+        "<div class=\"stat-card stat-prime\"><div class=\"stat-num\">" + cantidadPrimos + "</div><div class=\"stat-label\">Primos hallados</div></div>";
+
+      // 4. Mostrar resultados con getElementById()
+      document.getElementById("resultado-stats").innerHTML  = htmlStats;
+      document.getElementById("resultado").innerHTML        = htmlChips;
+      document.getElementById("resultado-tabla").innerHTML  = htmlTabla;
+      document.getElementById("resultado-primos").innerHTML = htmlPrimos;
+
+      document.getElementById("resultado-wrapper").classList.remove("oculto");
+      document.getElementById("resultado-vacio").classList.add("oculto");
+    }
+
+    // limpiar: borra campos y resultados con getElementById()
+    function limpiar() {
+      document.getElementById("terminos").value    = "";
+      document.getElementById("ahorro-base").value = "";
+      document.getElementById("resultado-stats").innerHTML  = "";
+      document.getElementById("resultado").innerHTML        = "";
+      document.getElementById("resultado-tabla").innerHTML  = "";
+      document.getElementById("resultado-primos").innerHTML = "";
+      document.getElementById("resultado-wrapper").classList.add("oculto");
+      document.getElementById("resultado-vacio").classList.remove("oculto");
+      document.getElementById("terminos").focus();
+    }
+
+    // Asignar eventos con getElementById() cuando carga la pagina
+    document.addEventListener("DOMContentLoaded", function() {
+      document.getElementById("btn-calcular").addEventListener("click", calcular);
+      document.getElementById("btn-limpiar").addEventListener("click",  limpiar);
+      document.getElementById("terminos").addEventListener("keydown", function(e) {
+        if (e.key === "Enter") calcular();
+      });
+      document.getElementById("ahorro-base").addEventListener("keydown", function(e) {
+        if (e.key === "Enter") calcular();
+      });
+    });
+
+  </script>
+
+</body>
+</html>
